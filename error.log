@@ -1,0 +1,1 @@
+[Thu Apr 19 21:03:42.448973 2018] [:error] [pid 21172] [client 10.0.2.2:51874] WordPress database error Unknown column 'moocsnews_' in 'field list' for query SELECT moocsnews_, referer: http://moocsnews.com.lc:8001/wp-admin/setup-config.php?step=1
