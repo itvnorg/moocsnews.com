@@ -19,6 +19,7 @@ class Course{
 	public $course_status;
 	public $post_type = 'course';
 	public $wpdb;
+	public $result = [];
 
 	// Construct Function
 	function __construct($source_name){
@@ -33,9 +34,11 @@ class Course{
 		if($datameta['start_date'] != $this->tmp_start_date->start_date){
 			$datameta['start_date'] = $this->tmp_start_date->start_date;
 			update_post_meta( $course_id, 'course_fields', $datameta );
-			echo "Start date updated new data</br>";
+			$this->result[] = "Start date updated new data";
+			// echo "Start date updated new data</br>";
 		}else{
-			echo "Course start date up to date</br>";
+			$this->result[] = "Course start date up to date";
+			// echo "Course start date up to date</br>";
 		}
 	}
 
@@ -93,7 +96,8 @@ class Course{
 		   	'post_content' => $this->course_content,
 		   	'post_status' => $this->course_status,
 		];
-		echo "Prepare main data for course successful</br>";
+		$this->result[] = "Prepare main data for course successful";
+		// echo "Prepare main data for course successful</br>";
 		$this->id = wp_insert_post($data);
 		return $this->id;
 	}
@@ -108,7 +112,8 @@ class Course{
 		   	'post_content' => $this->course_content,
 		   	'post_status' => $this->course_status,
 		];
-		echo "Prepare main data for update course successful</br>";
+		$this->result[] = "Prepare main data for update course successful";
+		// echo "Prepare main data for update course successful</br>";
 		$post_id = wp_update_post($data, true);
 		if (is_wp_error($post_id)) {
 			$errors = $post_id->get_error_messages();
@@ -118,7 +123,8 @@ class Course{
 		}else{
 			$this->add_relations_and_metadata($course_id);
 		}
-		echo "Update course successful</br></br>";
+		$this->result[] = "Update course successful";
+		// echo "Update course successful</br></br>";
 	}
 	// Function to delete course
 
@@ -152,12 +158,13 @@ class Course{
 			'video_type' => $video_type,
 			'video_poster' => $this->tmp_meta_data->video_poster,
 			'description' => $this->tmp_meta_data->short_description,
-			'source' => $this->source_name,
+			// 'source' => $this->source_name,
 			'start_date' => (isset($this->tmp_start_date)) ? $this->tmp_start_date->start_date : '0000-00-00',
 			'language' => $this->tmp_meta_data->language,
 		];
 		$this->data_meta = $data_meta;
-		echo "Prepare meta data for course successful</br>";
+		$this->result[] = "Prepare meta data for course successful";
+		// echo "Prepare meta data for course successful</br>";
 	}
 
 	// Function to insert/update course metadata
@@ -170,7 +177,8 @@ class Course{
 		} elseif ( '' === $new && $old ) {
 			delete_post_meta( $course_id, 'course_fields', $old );
 		}
-		echo "Insert/Update course meta successful</br>";
+		$this->result[] = "Insert/Update course meta successful";
+		// echo "Insert/Update course meta successful</br>";
 	}
 
 	// Function prepare cats of course
@@ -181,7 +189,8 @@ class Course{
 				$this->cats[] = get_cat_ID($item->name);
 			}
 		}
-		echo "Prepare Category ID By Name successful</br>";
+		$this->result[] = "Prepare Category ID By Name successful";
+		// echo "Prepare Category ID By Name successful</br>";
 	}
 
 	// Function prepare instructors of course
@@ -216,7 +225,8 @@ class Course{
 				$this->instructors[] = $name;
 			}
 		}
-		echo "Prepare instructors successful</br>";
+		$this->result[] = "Prepare instructors successful";
+		// echo "Prepare instructors successful</br>";
 	}
 
 	// Function prepare institution of course
@@ -249,7 +259,8 @@ class Course{
 				$this->institutions[] = $institution->name;
 			}
 		}
-		echo "Prepare institutions successful</br>";
+		$this->result[] = "Prepare institutions successful";
+		// echo "Prepare institutions successful</br>";
 	}
 
 	// Function prepare specialization of course
@@ -264,7 +275,8 @@ class Course{
 				$this->specializations[] = $specialization->name;
 			}
 		}
-		echo "Prepare specializations successful</br>";
+		$this->result[] = "Prepare specializations successful";
+		// echo "Prepare specializations successful</br>";
 	}
 
 	// Function format course content
@@ -291,7 +303,8 @@ class Course{
 			$course_content .= $contents->reviews;
 			$course_content .= '</span></br></br>';
 		}
-		echo "Format course content successful</br>";
+		$this->result[] = "Format course content successful";
+		// echo "Format course content successful</br>";
 		$this->course_content = $course_content;
 	}
 
@@ -301,6 +314,7 @@ class Course{
 		$this->add_course_to_specialization($course_id);
 		$this->add_course_to_institution($course_id);
 		$this->add_course_to_instructor($course_id);
+		$this->add_course_to_provider($course_id);
 		$this->insert_update_course_meta($course_id);
 		$this->add_course_image($course_id);
 	}
@@ -319,28 +333,38 @@ class Course{
    			'%s',
    		];
    		$this->wpdb->replace( $this->wpdb->prefix.'postmeta', $data_img, $format_img );
-		echo "Insert course image successfull</br>";
+		$this->result[] = "Insert course image successfull";
+		// echo "Insert course image successfull</br>";
 	}
 
 	// Function to add course to category
 	public function add_course_to_category($course_id){
 		wp_set_post_categories( $course_id, $this->cats, false );
-		echo "Add Course to Category successful</br>";
+		$this->result[] = "Add Course to Category successful";
+		// echo "Add Course to Category successful</br>";
 	}
 	// Function to add course to specialization
 	public function add_course_to_specialization($course_id){
 		wp_set_post_terms( $course_id, $this->specializations, 'specialization', false );
-		echo "Add Course to Specialization successful</br>";
+		$this->result[] = "Add Course to Specialization successful";
+		// echo "Add Course to Specialization successful</br>";
 	}
 	// Function to add course to institution
 	public function add_course_to_institution($course_id){
 		wp_set_post_terms( $course_id, $this->institutions, 'institution', false );
-		echo "Add Course to institution successful</br>";
+		$this->result[] = "Add Course to institution successful";
+		// echo "Add Course to institution successful</br>";
 	}
 	// Function to add course to instructor
 	public function add_course_to_instructor($course_id){
 		wp_set_post_terms( $course_id, $this->instructors, 'instructor', false );
-		echo "Add Course to instructor successful</br>";
+		$this->result[] = "Add Course to instructor successful";
+		// echo "Add Course to instructor successful</br>";
+	}
+	// Function to add course to provider
+	public function add_course_to_provider($course_id){
+		wp_set_post_terms( $course_id, $this->source_name, 'provider', false );
+		$this->result[] = "Add Course to provider successful";
 	}
 
 }

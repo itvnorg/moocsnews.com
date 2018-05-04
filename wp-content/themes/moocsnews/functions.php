@@ -18,3 +18,5 @@ require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-custom-fields-to-page.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-custom-fields-to-taxonomy.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-custom-taxonomies.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/insert-update-delete-data.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/api.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/load_css_js_front_end.php';

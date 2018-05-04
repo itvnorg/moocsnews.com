@@ -113,3 +113,41 @@ function itvndocorg_create_specialization_nonhierarchical_taxonomy() {
     'rewrite' => array( 'slug' => 'specialization' ),
   ));
 }
+
+/*==============    itvn.org Create Provider Custom Taxonomy Type   ======================*/
+add_action( 'init', 'itvndocorg_create_provider_nonhierarchical_taxonomy', 0 );
+ 
+function itvndocorg_create_provider_nonhierarchical_taxonomy() {
+ 
+// Labels part for the GUI
+ 
+  $labels = array(
+    'name' => _x( 'Providers', 'taxonomy general name' ),
+    'singular_name' => _x( 'Provider', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Provider' ),
+    'popular_items' => __( 'Popular Providers' ),
+    'all_items' => __( 'All Providers' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Provider' ), 
+    'update_item' => __( 'Update Provider' ),
+    'add_new_item' => __( 'Add New Provider' ),
+    'new_item_name' => __( 'New Provider Name' ),
+    'separate_items_with_commas' => __( 'Separate Providers with commas' ),
+    'add_or_remove_items' => __( 'Add or remove Providers' ),
+    'choose_from_most_used' => __( 'Choose from the most used Providers' ),
+    'menu_name' => __( 'Providers' ),
+  ); 
+ 
+// Now register the non-hierarchical taxonomy like tag
+ 
+  register_taxonomy('provider','course',array(
+    'hierarchical' => false,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'update_count_callback' => '_update_post_term_count',
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'provider' ),
+  ));
+}
