@@ -1,0 +1,77 @@
+footer{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+ul.list-horizontal{
+	list-style-type: none;
+    padding: 0;
+}
+
+ul.list-horizontal li.list-horizontal-item{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+ul.list-horizontal li.list-horizontal-item:hover a{
+    text-decoration: none;
+    color: #5074e9;
+}
+
+h6.section-title{
+	margin-bottom: 25px;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+p.font-size-20{
+	font-size: 20px;
+}
+
+.text-blue{
+	color: #5074e9;
+}
+
+.text-link {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 21px;
+}
+
+.navbar-light .text-logo{
+	text-transform: uppercase;
+    font-weight: 800;
+	color: #5074e9;
+    font-size: 25px;
+}
+
+.navbar-light .text-logo:hover{
+	color: #5074e9;
+}
+
+section.follow-us{
+	background: #d5dfff;
+    background: -moz-linear-gradient(-45deg,#d5dfff 0,#effcff 100%);
+    background: -webkit-gradient(left top,right bottom,color-stop(0,#d5dfff),color-stop(100%,#effcff));
+    background: -webkit-linear-gradient(-45deg,#d5dfff,#effcff);
+    background: -o-linear-gradient(-45deg,#d5dfff 0,#effcff 100%);
+    background: -ms-linear-gradient(-45deg,#d5dfff 0,#effcff 100%);
+    background: linear-gradient(135deg,#d5dfff,#effcff);
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+footer .copyright{
+	color: #979797;
+    margin-top: 20px;
+}
+
+footer .copyright .site-name{
+	text-transform: uppercase;
+    font-weight: 800;
+}
+
+footer .subscribe-section{
+	margin-bottom: 10px;
+}
