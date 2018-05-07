@@ -143,3 +143,9 @@ function itvndocorg_save_course_fields_meta( $post_id ) {
 	}
 }
 add_action( 'save_post', 'itvndocorg_save_course_fields_meta' );
+
+/*Add Tags To Courses*/
+add_action( 'init', 'itvndocorg_register_taxonomy_for_object_type' );
+function itvndocorg_register_taxonomy_for_object_type() {
+    register_taxonomy_for_object_type( 'post_tag', 'course' );
+};

@@ -19,4 +19,7 @@ require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-custom-fields-to-taxonomy.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-custom-taxonomies.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/insert-update-delete-data.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/api.php';
-require_once MOOCSNEWS_THEME_FUNC_DIR . '/load_css_js_front_end.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/load-css-js-front-end.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/metadata-structured-data-google.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-customize-theme.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/create-site-maps.php';

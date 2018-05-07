@@ -15,8 +15,10 @@
 <?php wp_head(); ?>
 <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+<?php echo get_theme_mod('head_script'); ?>
 </head>
 <body>
+    <?php echo get_theme_mod('body_head_script'); ?>
 	<header>
     	<?php require_once MOOCSNEWS_THEME_INC_DIR . '/header-menu.php'; ?>
 	</header>
