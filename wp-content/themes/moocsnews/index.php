@@ -1,4 +1,14 @@
-<?php get_header(); ?>
+<?php 
+/**
+ * Template Name: Front Page
+ *
+ * @package WordPress
+ * @subpackage moocsnews
+ * @since moocsnews 1.0
+ */
+	$categories = get_categories(); 
+	get_header(); 
+?>
 <?php echo do_shortcode("[simpleslider location=top]"); ?>
 <section class="popular-courses">
 	<div class="container">

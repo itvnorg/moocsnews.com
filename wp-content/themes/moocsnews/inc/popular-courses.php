@@ -2,12 +2,16 @@
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">All</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Computer Science</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Bussiness</a>
-  </li>
+  <?php 
+  foreach ($categories as $key => $value) {
+    if($key > 3){break;}
+    ?>
+    <li class="nav-item">
+      <a class="nav-link" id="profile-<?php echo $value->slug; ?>" data-toggle="tab" href="#<?php echo $value->slug; ?>" role="tab" aria-controls="<?php echo $value->slug; ?>" aria-selected="false"><?php echo $value->name; ?></a>
+    </li>
+    <?php
+  }
+  ?>
   <li class="linnk-all-subject">
     <a href="javascript:;">
       View all subjects <i class="fas fa-chevron-right"></i>
@@ -16,12 +20,62 @@
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-    <?php require_once MOOCSNEWS_THEME_INC_DIR . '/popular-course-item.php'; ?>
+    <div class="row">
+      <?php 
+      $args = array(
+        'post_type' => 'course',
+        'posts_per_page' => '6',
+          // 'meta_key' => 'itvndocorg_post_views_count', 
+          // 'orderby' => 'meta_value_num', 
+          // 'order' => 'DESC' ,
+      );  
+      $courses = new WP_Query( $args ); 
+
+      if ( $courses->have_posts() ) : while ( $courses->have_posts() ) : $courses->the_post(); 
+
+        get_template_part( 'inc/course-item-grid', get_post_format() );
+
+      endwhile; endif; 
+      wp_reset_postdata(); 
+      ?>
+    </div>
   </div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-    Computer Science
-  </div>
-  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-    Bussiness
-  </div>
+
+  <?php 
+  foreach ($categories as $key => $value) {
+    if($key > 3){break;}
+    ?>
+    <div class="tab-pane fade" id="<?php echo $value->slug; ?>" role="tabpanel" aria-labelledby="<?php echo $value->slug; ?>-tab">
+      <div class="row">
+        <?php
+        $args = array(
+          'post_type' => 'course',
+          'posts_per_page' => '6',
+          // 'meta_key' => 'itvndocorg_post_views_count', 
+          // 'orderby' => 'meta_value_num', 
+          // 'order' => 'DESC' ,
+        ); 
+        $args['tax_query'] = array(
+          array(
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => $value->slug,
+          )
+        ); 
+        $courses = new WP_Query( $args ); 
+
+        if ( $courses->have_posts() ) : while ( $courses->have_posts() ) : $courses->the_post();
+
+          get_template_part( 'inc/course-item-grid', get_post_format() ); 
+
+        endwhile; endif; 
+        wp_reset_postdata(); 
+        ?>
+      </div>
+    </div>
+    <?php
+  }
+  ?>
+
 </div>
+<div class="text-center button-show-more"><button class="btn btn-outline-primary"><?php echo __('Show More'); ?></button></div>
