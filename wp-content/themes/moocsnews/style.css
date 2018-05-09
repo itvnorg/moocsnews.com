@@ -41,7 +41,7 @@ p.font-size-20{
 .navbar-light .text-logo{
 	text-transform: uppercase;
     font-weight: 800;
-	color: #5074e9;
+    color: #5074e9;
     font-size: 25px;
 }
 
@@ -82,6 +82,11 @@ section.popular-courses {
 
 .button-show-more{
     margin-top: 30px;
+}
+
+.navbar-moocnews{
+    height: 90px;
+    border: solid 1px #f2f2f2;
 }
 
 /* BEGIN: Course Item */
@@ -157,14 +162,14 @@ section.popular-courses {
 }
 
 .course-title:after {
- display: block;
- content: '...';
- width: 1em;
- height: 1.5em;
- background: #fff;
- position: absolute;
- bottom: -5px;
- right: -5px;
+   display: block;
+   content: '...';
+   width: 1em;
+   height: 1.5em;
+   background: #fff;
+   position: absolute;
+   bottom: -5px;
+   right: -5px;
 }
 
 .course-detail-info{
@@ -241,9 +246,9 @@ section.popular-courses {
 }
 
 .popular-courses .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
-   border: 1px solid transparent;
-   border-bottom: solid 2px #5074e9!important;
-   color: #5074e9!important;
+ border: 1px solid transparent;
+ border-bottom: solid 2px #5074e9!important;
+ color: #5074e9!important;
 }
 
 .popular-courses .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover{
@@ -259,3 +264,235 @@ section.popular-courses {
     line-height: 24px;
 }
 /* END: Course Item */
+
+/* BEGIN: Courrse List */
+.breadcrumbs {
+    margin-top: 15px;
+}
+
+.inline {
+    display: inline;
+}
+
+.text-grey{
+    color: #979797;
+}
+
+.text-bold{
+    font-weight: 600;
+}
+
+.bg-white{
+    background-color: white;
+}
+
+.padding-horz-small{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.padding-vert-xsmall{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.radius{
+    border-radius: 5px;
+}
+
+.list-breadcrumb{
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-breadcrumb li a{
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.list-breadcrumb li a:hover{
+    text-decoration: none;
+    color: #979797;
+}
+
+.list-breadcrumb li i{
+    font-size: 12px;
+    margin: 5px;
+}
+
+.content{
+    border-top: 1px solid #e3e3e3;
+}
+
+.left-filter{
+    padding: 15px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}
+
+.left-filter h3{
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 26px; 
+}
+
+.left-filter .category-filter ul{
+    list-style: none;
+    padding-left: 0;
+}
+
+.left-filter .category-filter span.icon {
+    font-size: 12px;
+    float: right;
+    padding-top: 5px;
+}
+
+.left-filter .category-filter .filter-nav a{
+    display: block;
+}
+
+.left-filter .category-filter .filter-nav a:hover{
+    text-decoration: none;
+}
+
+.right-content{
+    margin-top: 20px;
+}
+
+.right-content .tbl-courses th{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+}
+
+.right-content .tbl-courses ul{
+    list-style: none;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    padding-left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.right-content .tbl-courses ul li{
+    display: inline;
+}
+
+.institution li a{
+    color: #3b3b3b!important;
+}
+
+.tbl-course-title a{
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    display: block;
+    color: #3b3b3b!important;
+}
+
+.tbl-course-title a:hover{
+    text-decoration: none;
+}
+
+.tbl-courses span.review-ratings{
+    display: block;
+}
+
+.tbl-courses span.review-ratings .icon-rating i{
+    color: #FFCA65;
+}
+
+.tbl-courses .rating{
+    text-align: right;
+}
+
+.tbl-courses .start-date{
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 21px;
+}
+
+.block{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+}
+/* END: Courrse List */
+
+/* BEGIN: Style checkbox */
+/* Customize the label (the check-item) */
+.check-item {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check-item input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.check-item:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.check-item input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.check-item input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.check-item .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/* END: tyle checkbox*/
+
+/* BEGIN: Layout style */
+.ml5{
+    margin-left: 5px;
+}
+/* END: Layout style */
