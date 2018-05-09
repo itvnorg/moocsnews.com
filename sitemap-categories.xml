@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>http://moocnews-dev.lc/category/big-block-of-4/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/big-block-of-4/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/featured/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/featured/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/lifestyle/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/lifestyle/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/media/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/media/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/politics/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/politics/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/social/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/social/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/tech/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/tech/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/technology/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/technology/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/uncategorized/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/uncategorized/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://moocnews-dev.lc/category/world/</loc>
-		<lastmod>2018-05-07</lastmod>
+		<loc>http://moocsnews.com.lc:8001/category/world/</loc>
+		<lastmod>2018-05-09</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 </urlset>

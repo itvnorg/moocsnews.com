@@ -23,3 +23,9 @@ require_once MOOCSNEWS_THEME_FUNC_DIR . '/load-css-js-front-end.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/metadata-structured-data-google.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-customize-theme.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/create-site-maps.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/retrieve_datas.php';
+
+global $the_home;
+if(empty($the_home)){
+	$the_home = get_home_url();
+}

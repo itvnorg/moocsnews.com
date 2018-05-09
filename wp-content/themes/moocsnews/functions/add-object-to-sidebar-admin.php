@@ -26,6 +26,15 @@ function itvndocorg_admin_menu(){
 	
 	add_submenu_page(
 		'itvndocorg', 
+		'itvn.org Clean Tags', 
+		'Clean Tags', 
+		'manage_options', 
+		'itvndocorg/clean-tag-admin-page', 
+		'clean_tag_admin_page'
+	);
+	
+	add_submenu_page(
+		'itvndocorg', 
 		'itvn.org Clean Courses', 
 		'Clean Courses', 
 		'manage_options', 
@@ -287,4 +296,40 @@ function itvndocorg_add_admin_bootstrap(){
 		wp_enqueue_style(['moocsnews_theme_bootstrap']);
     }
 	
+}
+
+// Function to manage content of page clean course
+function clean_tag_admin_page(){
+	?>
+	<div class="wrap">
+		<div class="clearfix">
+			<h1 class="wp-heading-inline">Clean Tags</h1>
+			<form action="<?php get_site_url; ?>/wp-admin/admin-post.php" method="POST">
+				<input type="hidden" name="action" value="itvndocorg_clean_tags_hook">
+				<input type="hidden" name="custom_nonce" value="<?php echo $custom_form_nonce; ?>">
+				<div id="poststuff">
+					<div id="post-body" class="metabox-holder columns-2">
+						<div id="post-body-content" style="position: relative;">
+							<input type="submit" name="submit" class="button button-primary button-large">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="clearfix">
+			<h1 class="wp-heading-inline">Clean Instructors</h1>
+			<form action="<?php get_site_url; ?>/wp-admin/admin-post.php" method="POST">
+				<input type="hidden" name="action" value="itvndocorg_clean_instructors_hook">
+				<input type="hidden" name="custom_nonce" value="<?php echo $custom_form_nonce; ?>">
+				<div id="poststuff">
+					<div id="post-body" class="metabox-holder columns-2">
+						<div id="post-body-content" style="position: relative;">
+							<input type="submit" name="submit" class="button button-primary button-large">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<?php
 }

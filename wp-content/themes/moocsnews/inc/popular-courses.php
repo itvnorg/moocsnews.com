@@ -3,7 +3,7 @@
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">All</a>
   </li>
   <?php 
-  foreach ($categories as $key => $value) {
+  foreach ($subjects as $key => $value) {
     if($key > 3){break;}
     ?>
     <li class="nav-item">
@@ -13,7 +13,7 @@
   }
   ?>
   <li class="linnk-all-subject">
-    <a href="javascript:;">
+    <a href="<?php echo $the_home.'/subjects'; ?>">
       View all subjects <i class="fas fa-chevron-right"></i>
     </a>
   </li>
@@ -42,27 +42,13 @@
   </div>
 
   <?php 
-  foreach ($categories as $key => $value) {
+  foreach ($subjects as $key => $value) {
     if($key > 3){break;}
     ?>
     <div class="tab-pane fade" id="<?php echo $value->slug; ?>" role="tabpanel" aria-labelledby="<?php echo $value->slug; ?>-tab">
       <div class="row">
         <?php
-        $args = array(
-          'post_type' => 'course',
-          'posts_per_page' => '6',
-          // 'meta_key' => 'itvndocorg_post_views_count', 
-          // 'orderby' => 'meta_value_num', 
-          // 'order' => 'DESC' ,
-        ); 
-        $args['tax_query'] = array(
-          array(
-            'taxonomy' => 'category',
-            'field'    => 'slug',
-            'terms'    => $value->slug,
-          )
-        ); 
-        $courses = new WP_Query( $args ); 
+        $courses = get_post_by_taxonomy('course', 'subject', $value->slug, 6);
 
         if ( $courses->have_posts() ) : while ( $courses->have_posts() ) : $courses->the_post();
 
@@ -78,4 +64,4 @@
   ?>
 
 </div>
-<div class="text-center button-show-more"><button class="btn btn-outline-primary"><?php echo __('Show More'); ?></button></div>
+<div class="text-center button-show-more"><a href="<?php echo $the_home.'/subjects'; ?>" class="btn btn-outline-primary"><?php echo __('Show More'); ?></a></div>

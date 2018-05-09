@@ -6,8 +6,11 @@
  * @subpackage moocsnews
  * @since moocsnews 1.0
  */
-	$categories = get_categories(); 
-	get_header(); 
+$subjects = get_terms( array(
+    'taxonomy' => 'subject',
+    'hide_empty' => false,
+) );
+get_header(); 
 ?>
 <?php echo do_shortcode("[simpleslider location=top]"); ?>
 <section class="popular-courses">

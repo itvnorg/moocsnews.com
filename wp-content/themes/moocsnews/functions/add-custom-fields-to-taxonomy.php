@@ -187,3 +187,50 @@ function itvndocorg_save_specialization_custom_fields_meta_data($term_id){
         }
     } 
 }
+
+/*==============    itvn.org Add Moocsnews Subject Fields Meta Box ======================*/
+add_action('subject_edit_form_fields','itvndocorg_add_custom_fields_to_edit_subject');
+add_action('subject_add_form_fields','itvndocorg_add_custom_fields_to_add_subject');
+add_action( 'edited_subject', 'itvndocorg_save_subject_custom_fields_meta_data', 10, 2 );
+add_action( 'create_subject', 'itvndocorg_save_subject_custom_fields_meta_data', 10, 2 );  
+
+function itvndocorg_add_custom_fields_to_add_subject($term){
+    $meta = get_term_meta( $term->term_id, 'subject_meta', true );
+?>
+    <div class="form-field">
+        <label for="subject_meta[image_url]"><?php echo _e('Image URL') ?></label>
+        <input type="text" name="subject_meta[image_url]" id="subject_meta[image_url]" value="<?php echo $meta['image_url']; ?>">              
+    </div>
+<?php
+}
+
+function itvndocorg_add_custom_fields_to_edit_subject($term){
+    $meta = get_term_meta( $term->term_id, 'subject_meta', true );
+?>
+    <tr class="form-field">
+        <th scope="row">
+            <label for="subject_meta[image_url]"><?php echo _e('Image URL') ?></label>
+            <td>
+                <input type="text" name="subject_meta[image_url]" id="subject_meta[image_url]" value="<?php echo $meta['image_url']; ?>">                
+            </td>
+        </th>
+    </tr>
+<?php
+}
+
+/*==============    itvn.org Save Moocsnews Category Fields Meta Data   ======================*/
+function itvndocorg_save_subject_custom_fields_meta_data($term_id){ 
+
+    if ( isset( $_POST['subject_meta'] ) ) {
+    
+        $old = get_term_meta( $term_id, 'subject_meta', true );
+        $new = $_POST['subject_meta'];
+
+        // Save meta data array.
+        if ( $new && $new !== $old ) {
+            update_term_meta( $term_id, 'subject_meta', $new );
+        } elseif ( '' === $new && $old ) {
+            delete_term_meta( $term_id, 'subject_meta', $old );
+        }
+    } 
+}

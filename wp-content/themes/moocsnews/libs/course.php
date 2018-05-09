@@ -7,6 +7,7 @@ class Course{
 	public $id;
 	public $source_name;
 	public $cats = [];
+	public $subjects = [];
 	public $instructors = [];
 	public $institutions = [];
 	public $specializations = [];
@@ -47,15 +48,20 @@ class Course{
 		if($modified_at < $this->tmp_data->effectived_at){
 			return false;
 		}
+		if($modified_at < $this->tmp_tags_data->updated_at){
+			return false;
+		}
 		return true;
 	}
 
 	// Function repare data
 	public function prepare_data_for_insert_update(){
 		$this->format_course_content();
-		$this->prepare_cats($this->tmp_meta_data->categories);
-		$this->prepare_instructors($this->tmp_meta_data->instructors);
+		// $this->prepare_cats($this->tmp_meta_data->categories);
+		$this->prepare_subjects($this->tmp_meta_data->categories);
+		// $this->prepare_instructors($this->tmp_meta_data->instructors);
 		$this->prepare_institutions($this->tmp_meta_data->institutions);
+		$this->prepare_tags($this->tmp_tags_data->tags);
 		$this->prepare_course_metadata();
 	}
 
@@ -67,8 +73,13 @@ class Course{
 	}
 
 	// Function set temp data
-	public function set_tmp_start_data($tmp_start_date){
+	public function set_tmp_start_date($tmp_start_date){
 		$this->tmp_start_date = $tmp_start_date;
+	}
+
+	// Function set temp data
+	public function set_tmp_tags_data($tmp_tags_data){
+		$this->tmp_tags_data = $tmp_tags_data;
 	}
 
 	// Function set temp data
@@ -193,6 +204,18 @@ class Course{
 		// echo "Prepare Category ID By Name successful</br>";
 	}
 
+	// Function prepare cats of course
+	public function prepare_subjects($tmp_cats){
+		foreach ($tmp_cats as $key => $value){
+			$rows_cats = $this->community_db->get_results("select * from `categories` where `categories`.`meta` like '%".$value."%'");
+			foreach ($rows_cats as $item) {
+				$this->subjects[] = $item->name;
+			}
+		}
+		$this->result[] = "Prepare Subject ID By Name successful";
+		// echo "Prepare Category ID By Name successful</br>";
+	}
+
 	// Function prepare instructors of course
 	public function prepare_instructors($tmp_instructors){
 		if(isset($tmp_instructors) && !empty($tmp_instructors)){
@@ -279,6 +302,24 @@ class Course{
 		// echo "Prepare specializations successful</br>";
 	}
 
+	// Function prepare tags of course
+	public function prepare_tags($tags){
+		if(isset($tags) && !empty($tags)){
+			$tags = json_decode($tags);
+			foreach ($tags as $key => $value) {
+				if( doubleval($value) >= 4 && !strpos($key, '/')){
+
+					$new_key = trim(preg_replace('/[^A-Za-z0-9\-]/', ' ', $key)," -");
+					
+					$this->tags[] = $new_key;
+					
+				}
+			}
+		}
+		$this->result[] = "Prepare tags successful";
+		// echo "Prepare tags successful</br>";
+	}
+
 	// Function format course content
 	public function format_course_content(){
 		$contents = json_decode($this->tmp_data->course_content);
@@ -310,11 +351,13 @@ class Course{
 
 	// Function add all relations and metadata
 	public function add_relations_and_metadata($course_id){
-		$this->add_course_to_category($course_id);
+		// $this->add_course_to_category($course_id);
+		$this->add_course_to_subject($course_id);
 		$this->add_course_to_specialization($course_id);
 		$this->add_course_to_institution($course_id);
-		$this->add_course_to_instructor($course_id);
+		// $this->add_course_to_instructor($course_id);
 		$this->add_course_to_provider($course_id);
+		$this->add_course_to_tag($course_id);
 		$this->insert_update_course_meta($course_id);
 		$this->add_course_image($course_id);
 	}
@@ -365,6 +408,18 @@ class Course{
 	public function add_course_to_provider($course_id){
 		wp_set_post_terms( $course_id, $this->source_name, 'provider', false );
 		$this->result[] = "Add Course to provider successful";
+	}
+	// Function to add course to subject
+	public function add_course_to_subject($course_id){
+		wp_set_post_terms( $course_id, $this->subjects, 'subject', false );
+		$this->result[] = "Add Course to subject successful";
+		// echo "Add Course to Category successful</br>";
+	}
+	// Function to add course to tag
+	public function add_course_to_tag($course_id){
+		wp_set_post_terms( $course_id, $this->tags );
+		$this->result[] = "Add Course to tag successful";
+		// echo "Add Course to instructor successful</br>";
 	}
 
 }

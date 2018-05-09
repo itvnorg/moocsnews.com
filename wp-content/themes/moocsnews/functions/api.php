@@ -45,6 +45,9 @@ function itvndocorg_api_response_upload_courses($request){
 	$start_date = $community_db->get_results("select * from ".$source."_startdate where `course_id` = ".$tmp_course[0]->id." order by `effectived_at` desc limit 1");
 	$data['start_date'] = $start_date[0];
 
+	$tag = $community_db->get_results("select * from ".$source."_tags where `intro_course_url` = \"".$tmp_course[0]->intro_course_url."\" limit 1");
+	$data['tag'] = $tag[0];
+
 	if($source == 'edx'){
 		$course = new Course_edX();
 	}else{
@@ -53,7 +56,8 @@ function itvndocorg_api_response_upload_courses($request){
 	$course->set_course_status($course_status);
 	$course->set_community_db($community_db);
 	$course->set_tmp_data($tmp_course[0]);
-	$course->set_tmp_start_data($start_date[0]);
+	$course->set_tmp_start_date($start_date[0]);
+	$course->set_tmp_tags_data($tag[0]);
 	$course->prepare_data_for_insert_update();
 	$course->prepare_specs();
 	$is_existed = $course->get_course_by_url($tmp_course[0]->intro_course_url);

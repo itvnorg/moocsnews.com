@@ -8,7 +8,7 @@ function add_metadata_structured_data(){
 	}
 
 	if(is_page()){
-		if(!is_page_template('page-catalog.php') && !is_page_template('page-categories.php')){
+		if(!is_page_template('page-catalog.php') && !is_page_template('page-subjects.php')){
 			others_page_add_metadata_structured_data();
 		}
 	}
@@ -21,8 +21,8 @@ function add_metadata_structured_data(){
 		catalog_add_metadata_structured_data();
 	}
 
-	if(is_page_template('page-categories.php')){
-		categories_add_metadata_structured_data();
+	if(is_page_template('page-subjects.php')){
+		subjects_add_metadata_structured_data();
 	}
 
 	if(is_category()){
@@ -36,13 +36,14 @@ function add_metadata_structured_data(){
 
 /*==============	itvn.org Add meta description (SEO) to Home Page 	======================*/
 function home_front_page_add_metadata_structured_data(){
+	global $the_home;
 	?>
 	<!-- BEGIN: Meta description for SEO. -->
-	<link rel="canonical" href="<?php echo get_home_url(); ?>" />
+	<link rel="canonical" href="<?php echo $the_home; ?>" />
 	<!-- Facebook & Twitter -->
 	<meta property="og:title" content="<?php echo bloginfo('name'); ?>" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="<?php echo get_home_url(); ?>" />
+	<meta property="og:url" content="<?php echo $the_home; ?>" />
 	<meta property="og:site_name" content="<?php echo bloginfo('name'); ?>" />
 	<meta property="og:description" content="<?php echo get_theme_mod('footer_about_us'); ?>" />
 	<meta property="og:updated_time" content="<?php echo date('Y-m-d'); ?>" />
@@ -59,10 +60,10 @@ function home_front_page_add_metadata_structured_data(){
 	{
 	  "@context": "http://schema.org",
 	  "@type": "WebSite",
-	  "url": "<?php echo get_home_url(); ?>",
+	  "url": "<?php echo $the_home; ?>",
 	  "potentialAction": {
 	    "@type": "SearchAction",
-	    "target": "<?php echo get_home_url().'/courses?search_term={search_term_string}'; ?>",
+	    "target": "<?php echo $the_home.'/courses?search_term={search_term_string}'; ?>",
 	    "query-input": "required name=search_term_string"
 	  }
 	}
@@ -74,6 +75,7 @@ function home_front_page_add_metadata_structured_data(){
 
 /*==============	itvn.org Add meta description (SEO) to Others Page 	======================*/
 function others_page_add_metadata_structured_data(){
+	global $the_home;
 	global $post;  
 	$meta_page = get_post_meta( $post->ID, 'page_fields', true ); 
 	?>
@@ -103,7 +105,7 @@ function others_page_add_metadata_structured_data(){
 	    "@type": "ListItem",
 	    "position": 1,
 	    "item": {
-	      "@id": "<?php echo get_home_url(); ?>",
+	      "@id": "<?php echo $the_home; ?>",
 	      "name": "Home"
 	    }
 	  },{
@@ -123,6 +125,7 @@ function others_page_add_metadata_structured_data(){
 
 /*==============	itvn.org Add meta description (SEO) to Course Detail 	======================*/
 function add_course_detail_metadata_structured_data(){
+	global $the_home;
 	
 	if ( have_posts() ) : while ( have_posts() ) : the_post();
 		$course_id = get_the_ID();
@@ -151,7 +154,7 @@ function add_course_detail_metadata_structured_data(){
 	if (has_post_thumbnail( $course->ID ) ){
 		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $course->ID ), 'single-post-thumbnail' );
 		$post_image = $image[0];
-		$post_image = get_home_url().'/timthumb.php?src='.$post_image.'&w=600&h=315';
+		$post_image = $the_home.'/timthumb.php?src='.$post_image.'&w=600&h=315';
 	}
 
 
@@ -159,12 +162,12 @@ function add_course_detail_metadata_structured_data(){
 	if($course_id){//---> BEGIN: If
 	?>
 		<!-- BEGIN: Meta description for SEO. -->
-		<link rel="canonical" href="<?php echo get_home_url(); ?>/course/<?php echo $course_detail->post_name; ?>" />
+		<link rel="canonical" href="<?php echo $the_home; ?>/course/<?php echo $course_detail->post_name; ?>" />
 		<!-- Facebook & Twitter -->
 		<meta property="og:title" content="<?php echo $course_detail->post_title; ?>" />
 		<meta property="og:type" content="article" />
 		<meta property="og:image" content="<?php echo $post_image; ?>" />
-		<meta property="og:url" content="<?php echo get_home_url(); ?>/course/<?php echo $course_detail->post_name; ?>" />
+		<meta property="og:url" content="<?php echo $the_home; ?>/course/<?php echo $course_detail->post_name; ?>" />
 		<?php if( !empty($meta['video_introduction']) ){ ?>
 			<?php if($meta['video_type'] != 'youtube') { ?>
 				<meta property="og:video" content="<?php echo $meta['video_introduction']; ?>" />
@@ -213,21 +216,21 @@ function add_course_detail_metadata_structured_data(){
 		    "@type": "ListItem",
 		    "position": 1,
 		    "item": {
-		      "@id": "<?php echo get_home_url(); ?>",
+		      "@id": "<?php echo $the_home; ?>",
 		      "name": "Home"
 		    }
 		  },{
 		    "@type": "ListItem",
 		    "position": 2,
 		    "item": {
-		      "@id": "<?php echo get_home_url().'/courses'; ?>",
+		      "@id": "<?php echo $the_home.'/courses'; ?>",
 		      "name": "Courses"
 		    }
 		  },{
 		    "@type": "ListItem",
 		    "position": 3,
 		    "item": {
-		      "@id": "<?php echo get_home_url(); ?>/course/<?php echo $course_detail->post_name; ?>",
+		      "@id": "<?php echo $the_home; ?>/course/<?php echo $course_detail->post_name; ?>",
 		      "name": "<?php echo $course_detail->post_title; ?>"
 		    }
 		  }]
@@ -240,6 +243,7 @@ function add_course_detail_metadata_structured_data(){
 
 /*==============	itvn.org Add meta description (SEO) to Category 	======================*/
 function category_add_metadata_structured_data(){
+	global $the_home;
 	$uri_requests = explode('category/', $_SERVER['REQUEST_URI']);
 	$categories = explode('?', $uri_requests[1]);
 	$category = get_category_by_slug($categories[0]);
@@ -287,11 +291,11 @@ function category_add_metadata_structured_data(){
 		wp_reset_postdata(); 
 	?>
 		<!-- BEGIN: Meta description for SEO. -->
-		<link rel="canonical" href="<?php echo get_home_url(); ?>/category/<?php echo $category->slug; ?>" />
+		<link rel="canonical" href="<?php echo $the_home; ?>/category/<?php echo $category->slug; ?>" />
 		<!-- Facebook & Twitter -->
 		<meta property="og:title" content="<?php echo $category->description; ?>" />
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="<?php echo get_home_url(); ?>/category/<?php echo $category->slug; ?>" />
+		<meta property="og:url" content="<?php echo $the_home; ?>/category/<?php echo $category->slug; ?>" />
 		<meta property="og:site_name" content="<?php echo bloginfo('name'); ?>" />
 		<meta property="og:description" content="<?php echo $category->description; ?>" />
 		<meta property="og:updated_time" content="<?php echo date('Y-m-d'); ?>" />
@@ -321,21 +325,21 @@ function category_add_metadata_structured_data(){
 		    "@type": "ListItem",
 		    "position": 1,
 		    "item": {
-		      "@id": "<?php echo get_home_url(); ?>",
+		      "@id": "<?php echo $the_home; ?>",
 		      "name": "Home"
 		    }
 		  },{
 		    "@type": "ListItem",
 		    "position": 2,
 		    "item": {
-		      "@id": "<?php echo get_home_url().'/categories'; ?>",
+		      "@id": "<?php echo $the_home.'/categories'; ?>",
 		      "name": "Categories"
 		    }
 		  },{
 		    "@type": "ListItem",
 		    "position": 3,
 		    "item": {
-		      "@id": "<?php echo get_home_url(); ?>/category/<?php echo $category->slug; ?>",
+		      "@id": "<?php echo $the_home; ?>/category/<?php echo $category->slug; ?>",
 		      "name": "<?php echo $category->name; ?>"
 		    }
 		  }]
@@ -347,20 +351,24 @@ function category_add_metadata_structured_data(){
 }
 
 /*==============	itvn.org Add meta description (SEO) to Categories 	======================*/
-function categories_add_metadata_structured_data(){
+function subjects_add_metadata_structured_data(){
+	global $the_home;
 	global $post;  
 	$meta_page = get_post_meta( $post->ID, 'page_fields', true ); 
-	$categories = get_categories(); 
+	$subjects = get_terms( array(
+	    'taxonomy' => 'subject',
+	    'hide_empty' => false,
+	) );
 	$json_ld = '';
 	$i = 1;
-	if ( count($categories) > 0 ){
-		foreach ($categories as $key => $value) {
+	if ( count($subjects) > 0 ){
+		foreach ($subjects as $key => $value) {
 			$json_ld .= '{
 		      	"@type": "ListItem",
 		      	"position": "'.$i.'",
   				"url":"'.get_category_link( $value ).'"
 			}';
-			if($i < count($categories)){
+			if($i < count($subjects)){
 				$json_ld .= ',';
 			}
 			$i++;
@@ -403,7 +411,7 @@ function categories_add_metadata_structured_data(){
 	    "@type": "ListItem",
 	    "position": 1,
 	    "item": {
-	      "@id": "<?php echo get_home_url(); ?>",
+	      "@id": "<?php echo $the_home; ?>",
 	      "name": "Home"
 	    }
 	  },{
@@ -423,6 +431,7 @@ function categories_add_metadata_structured_data(){
 
 /*==============	itvn.org Add meta description (SEO) to Catalog 	======================*/
 function catalog_add_metadata_structured_data(){
+	global $the_home;
 	global $post;  
 	$meta_page = get_post_meta( $post->ID, 'page_fields', true ); 
 	$args = array(
@@ -452,7 +461,7 @@ function catalog_add_metadata_structured_data(){
 				//---> Get course image
 				if (has_post_thumbnail( $value->ID ) ){
 					$image = wp_get_attachment_image_src( get_post_thumbnail_id( $value->ID ), 'single-post-thumbnail' );
-					$post_image = get_home_url().'/timthumb.php?src='.$image[0].'&w=600&h=315';
+					$post_image = $the_home.'/timthumb.php?src='.$image[0].'&w=600&h=315';
 				}
 			}
 		}
@@ -483,10 +492,10 @@ function catalog_add_metadata_structured_data(){
 	{
 	  "@context": "http://schema.org",
 	  "@type": "WebSite",
-	  "url": "<?php echo get_home_url(); ?>",
+	  "url": "<?php echo $the_home; ?>",
 	  "potentialAction": {
 	    "@type": "SearchAction",
-	    "target": "<?php echo get_home_url().'/courses?search_term={search_term_string}'; ?>",
+	    "target": "<?php echo $the_home.'/courses?search_term={search_term_string}'; ?>",
 	    "query-input": "required name=search_term_string"
 	  }
 	}
@@ -508,7 +517,7 @@ function catalog_add_metadata_structured_data(){
 	    "@type": "ListItem",
 	    "position": 1,
 	    "item": {
-	      "@id": "<?php echo get_home_url(); ?>",
+	      "@id": "<?php echo $the_home; ?>",
 	      "name": "Home"
 	    }
 	  },{
@@ -528,6 +537,7 @@ function catalog_add_metadata_structured_data(){
 
 /*==============	itvn.org Add meta description (SEO) to Category 	======================*/
 function tag_page_add_metadata_structured_data(){
+	global $the_home;
 	$uri_requests = explode('tag/', $_SERVER['REQUEST_URI']); 
 	$tags_arr = explode('?', $uri_requests[1]);
 	$tag_slug = $tags_arr[0];
@@ -577,11 +587,11 @@ function tag_page_add_metadata_structured_data(){
 	?>
 
 		<!-- BEGIN: Meta description for SEO. -->
-		<link rel="canonical" href="<?php echo get_home_url(); ?>/tag/<?php echo $tag->slug; ?>" />
+		<link rel="canonical" href="<?php echo $the_home; ?>/tag/<?php echo $tag->slug; ?>" />
 		<!-- Facebook & Twitter -->
 		<meta property="og:title" content="<?php echo $tag->name; ?>" />
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="<?php echo get_home_url(); ?>/tag/<?php echo $tag->slug; ?>" />
+		<meta property="og:url" content="<?php echo $the_home; ?>/tag/<?php echo $tag->slug; ?>" />
 		<meta property="og:site_name" content="<?php echo bloginfo('name'); ?>" />
 		<meta property="og:description" content="<?php echo $tag->description; ?>" />
 		<meta property="og:updated_time" content="<?php echo date('Y-m-d'); ?>" />
@@ -611,14 +621,14 @@ function tag_page_add_metadata_structured_data(){
 		    "@type": "ListItem",
 		    "position": 1,
 		    "item": {
-		      "@id": "<?php echo get_home_url(); ?>",
+		      "@id": "<?php echo $the_home; ?>",
 		      "name": "Home"
 		    }
 		  },{
 		    "@type": "ListItem",
 		    "position": 2,
 		    "item": {
-		      "@id": "<?php echo get_home_url(); ?>/tag/<?php echo $tag->slug; ?>",
+		      "@id": "<?php echo $the_home; ?>/tag/<?php echo $tag->slug; ?>",
 		      "name": "<?php echo $tag->name; ?>"
 		    }
 		  }]

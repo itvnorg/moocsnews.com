@@ -151,3 +151,41 @@ function itvndocorg_create_provider_nonhierarchical_taxonomy() {
     'rewrite' => array( 'slug' => 'provider' ),
   ));
 }
+
+/*==============    itvn.org Create Subject Custom Taxonomy Type   ======================*/
+add_action( 'init', 'itvndocorg_create_subject_nonhierarchical_taxonomy', 0 );
+ 
+function itvndocorg_create_subject_nonhierarchical_taxonomy() {
+ 
+// Labels part for the GUI
+ 
+  $labels = array(
+    'name' => _x( 'Subjects', 'taxonomy general name' ),
+    'singular_name' => _x( 'Subject', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Subject' ),
+    'popular_items' => __( 'Popular Subjects' ),
+    'all_items' => __( 'All Subjects' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Subject' ), 
+    'update_item' => __( 'Update Subject' ),
+    'add_new_item' => __( 'Add New Subject' ),
+    'new_item_name' => __( 'New Subject Name' ),
+    'separate_items_with_commas' => __( 'Separate Subjects with commas' ),
+    'add_or_remove_items' => __( 'Add or remove Subjects' ),
+    'choose_from_most_used' => __( 'Choose from the most used Subjects' ),
+    'menu_name' => __( 'Subjects' ),
+  ); 
+ 
+// Now register the non-hierarchical taxonomy like tag
+ 
+  register_taxonomy('subject','course',array(
+    'hierarchical' => false,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'update_count_callback' => '_update_post_term_count',
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'subject' ),
+  ));
+}
