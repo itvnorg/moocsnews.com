@@ -1,5 +1,5 @@
 <?php 
-
+// remove_filter('template_redirect','redirect_canonical');
 /*==============	Define Const Vars	======================*/
 define('MOOCSNEWS_THEME_URL', get_template_directory_uri());
 

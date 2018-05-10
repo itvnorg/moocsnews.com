@@ -1,6 +1,14 @@
+header {
+    border-bottom: 1px solid #f2f2f2;
+}
+
 footer{
 	padding-top: 50px;
 	padding-bottom: 50px;
+}
+
+.pull-right{
+    float: right;
 }
 
 ul.list-horizontal{
@@ -36,6 +44,18 @@ p.font-size-20{
     font-size: 16px;
     font-weight: 500;
     line-height: 21px;
+}
+
+.link-decoration-none a:hover{
+    text-decoration: none;
+}
+
+.link-gray a {
+    color: #62686b;
+}
+
+.link-underline a {
+    border-bottom: 1px solid #d6d5ce;
 }
 
 .navbar-light .text-logo{
@@ -496,3 +516,84 @@ section.popular-courses {
     margin-left: 5px;
 }
 /* END: Layout style */
+
+/* BEGIN: Category Item */
+.category-item{
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    transition: all .3s ease-in-out;
+}
+
+.category-item:hover{
+    transform: scale(1.05);
+}     
+
+.category-item .block-head {
+    margin-bottom: 10px;
+}
+
+.category-item .block-title{
+    color: #000;
+    font-weight: 400;
+    font-size: 20px;
+    border-bottom: 1px solid;
+}
+
+.category-item .block-count {
+    color: green;
+    display: block;
+    font-size: 14px;
+}
+
+.category-item li.item-inline{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+li.item-inline img{
+    display: inline-block;
+    margin-right: 10px;
+}
+/* END: Category Item */
+
+/* BEGIN: List groups customize; */
+.list-group-customize-1{
+
+}
+
+.list-group-customize-1 .list-group-item{
+    border: 0px;
+    padding: 3px 0px;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: normal;
+}
+/* END: List groups customize; */
+
+.main-content {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.breadcrumb {
+    padding-left: 0px;
+    background-color: inherit;
+    margin-bottom: 0px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+}
+
+/* BEGIN: Datatables; */
+.dataTables_wrapper .bottom{
+    margin: 15px 0px;
+}
+/* END: Datatables; */

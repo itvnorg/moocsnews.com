@@ -35,8 +35,8 @@ function the_breadcrumb() {
 		echo '">';
 		_e('Home', 'moocsnews');
 		echo "</a></li>";
-		if (is_category() || is_single()) {
-			if(is_category()){
+		if (is_taxonomy('subject') || is_single()) {
+			if(is_taxonomy('subject')){
 				echo '<li class="breadcrumb-item"><a href="'.$the_home.'/subjects'.'">';
 				_e('Subjects', 'moocsnews');
 				echo '</a></li><li class="breadcrumb-item">';
