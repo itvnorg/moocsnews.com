@@ -35,8 +35,8 @@ function the_breadcrumb() {
 		echo '">';
 		_e('Home', 'moocsnews');
 		echo "</a></li>";
-		if (is_taxonomy('subject') || is_single()) {
-			if(is_taxonomy('subject')){
+		if (is_tax('subject') || is_single()) {
+			if(is_tax('subject')){
 				echo '<li class="breadcrumb-item"><a href="'.$the_home.'/subjects'.'">';
 				_e('Subjects', 'moocsnews');
 				echo '</a></li><li class="breadcrumb-item">';
@@ -45,8 +45,9 @@ function the_breadcrumb() {
 				echo '</li>';
 			}
 			if (is_single()) {
-				echo '<li class="breadcrumb-item"><a href="'.$the_home.'/courses'.'">';
-				_e('Courses', 'moocsnews');
+				$term = get_the_terms($post, 'provider');
+				echo '<li class="breadcrumb-item"><a href="'.get_term_link($term[0]).'">';
+				echo $term[0]->name;
 				echo '</a></li><li class="breadcrumb-item">';
 				the_title();
 				echo '</li>';
