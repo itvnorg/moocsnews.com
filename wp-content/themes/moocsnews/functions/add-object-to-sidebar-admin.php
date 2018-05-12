@@ -49,7 +49,7 @@ function itvndocorg_index_page(){
 	<div class="wrap">
 		<h2>Welcome To itvn.org tools</h2>
 	</div>
-	<?php
+	<?php 
 }
 
 // Function to manage content of page clean course
@@ -216,6 +216,7 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 				  		type: "GET",
 				  		data: params_upload,
 				  		success: function(data){
+					  		console.log(data);
 							if(data.status == 'error'){
 								$.each(data.messages, function( indexMsg, valueMsg ){
 					  				remove_progress_animation();
@@ -243,6 +244,7 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 					  	},
 					  	error: function(data){
 					  		remove_progress_animation();
+					  		console.log(data);
 					  		alert('Have error when upload courses');
 					  	}
 				  	});

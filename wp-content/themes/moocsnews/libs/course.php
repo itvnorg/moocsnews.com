@@ -59,7 +59,7 @@ class Course{
 		$this->format_course_content();
 		// $this->prepare_cats($this->tmp_meta_data->categories);
 		$this->prepare_subjects($this->tmp_meta_data->categories);
-		// $this->prepare_instructors($this->tmp_meta_data->instructors);
+		$this->prepare_instructors($this->tmp_meta_data->instructors);
 		$this->prepare_institutions($this->tmp_meta_data->institutions);
 		$this->prepare_tags($this->tmp_tags_data->tags);
 		$this->prepare_course_metadata();
@@ -141,6 +141,7 @@ class Course{
 
 	// Function prepare course metadata
 	public function prepare_course_metadata(){
+		$contents = json_decode($this->tmp_data->course_content);
 		$expression_youtube = '/(?<=(?:v|i)=)[a-zA-Z0-9-]+(?=&)|(?<=(?:v|i)\/)[^&\n%]+|(?<=embed\/)[^"&\n]+|(?<=(?:v|i)=)[^&\n]+|(?<=youtu.be\/)[^&\n]+/';
 		$video_src = '';
 		$video_type = '';
@@ -167,11 +168,18 @@ class Course{
 			'link_intro_course' => $this->tmp_data->intro_course_url,
 			'video_introduction' => $video_src,
 			'video_type' => $video_type,
-			'video_poster' => $this->tmp_meta_data->video_poster,
-			'description' => $this->tmp_meta_data->short_description,
+			'video_poster' => $this->return_value_or_null($this->tmp_meta_data,'video_poster'),
+			'description' => $this->return_value_or_null($this->tmp_meta_data,'short_description'),
+			'cost' => $this->return_value_or_null($this->tmp_meta_data,'course_price'),
+			'session' => $this->return_value_or_null($this->tmp_start_date,'status'),
+			// 'certificate' => $this->tmp_meta_data->short_description,
+			'effort' => $this->get_course_effort_field_by_source($this->tmp_meta_data),
+			// 'duration' => $this->tmp_meta_data->commitment,
+			'about_this_course' => $this->return_value_or_null($contents,'description'),
+			'syllabus' => $this->return_value_or_null($contents,'syllabus'),
 			// 'source' => $this->source_name,
 			'start_date' => (isset($this->tmp_start_date)) ? $this->tmp_start_date->start_date : '0000-00-00',
-			'language' => $this->tmp_meta_data->language,
+			'language' => $this->return_value_or_null($this->tmp_meta_data,'language'),
 		];
 		$this->data_meta = $data_meta;
 		$this->result[] = "Prepare meta data for course successful";
@@ -355,7 +363,7 @@ class Course{
 		$this->add_course_to_subject($course_id);
 		$this->add_course_to_specialization($course_id);
 		$this->add_course_to_institution($course_id);
-		// $this->add_course_to_instructor($course_id);
+		$this->add_course_to_instructor($course_id);
 		$this->add_course_to_provider($course_id);
 		$this->add_course_to_tag($course_id);
 		$this->insert_update_course_meta($course_id);
@@ -420,6 +428,33 @@ class Course{
 		wp_set_post_terms( $course_id, $this->tags );
 		$this->result[] = "Add Course to tag successful";
 		// echo "Add Course to instructor successful</br>";
+	}
+
+	// Function set field course effort
+	public function get_course_effort_field_by_source($data){
+		$effort;
+		switch ($this->source_name) {
+			case 'edX':
+				$effort = $this->return_value_or_null($data,'course_effort');
+				break;
+
+			case 'Coursera':
+				$effort = $this->return_value_or_null($data,'commitment');
+				break;
+			
+			default:
+				$effort = '';
+				break;
+		}
+		return $effort;
+	}
+
+	// Function return value or null
+	public function return_value_or_null($data, $field){
+		if (!isset($data->$field)) {
+			$value = '';
+		}
+		return $data->$field;
 	}
 
 }

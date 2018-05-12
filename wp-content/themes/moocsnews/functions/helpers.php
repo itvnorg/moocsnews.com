@@ -46,7 +46,7 @@ function the_breadcrumb() {
 			}
 			if (is_single()) {
 				$term = get_the_terms($post, 'provider');
-				echo '<li class="breadcrumb-item"><a href="'.get_term_link($term[0]).'">';
+				echo '<li class="breadcrumb-item"><a href="'./*get_term_link($term[0])*/'javascript:;'.'">';
 				echo $term[0]->name;
 				echo '</a></li><li class="breadcrumb-item">';
 				the_title();
