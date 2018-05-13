@@ -137,9 +137,20 @@ function ajax_upload_course_admin_page(){
 									<option value="edx">edX</option>
 							</select>
 						</p>
+
+						<p>
+							<div class="radio">
+								<label><input type="radio" name="is_upload_tags" value="1" checked>Upload Tags</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="is_upload_tags" value="0">Don't Upload Tags</label>
+							</div>
+						</p>
 					
 						<button type="submit" name="submit" class="button button-primary button-large" id="btn_prepare_upload_courses">Prepare courses to upload</button>
 						<a href="javascript:;" id="btn_upload_courses" class="button button-primary button-large" onclick="upload_courses();" style="display: none;">Upload course</a>
+						<a href="javascript:;" id="btn_prepare_upload_tags" class="button button-primary button-large" onclick="get_upload_tags();">Prepare tags to upload</a>
+						<a href="javascript:;" id="btn_upload_tags" class="button button-primary button-large" onclick="upload_tags();" style="display: none;">Upload tag</a>
 					</div>
 				</div>
 			</div>
@@ -164,10 +175,14 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 			var urlSite = window.location.origin;
 			var urlUploadCourses = urlSite + "/wp-json/itvndocorg/v1/courses/upload";
 			var urlGetUploadCourses = urlSite + "/wp-json/itvndocorg/v1/courses/get-upload-list";
+			var urlUploadTags = urlSite + "/wp-json/itvndocorg/v1/tags/upload";
+			var urlGetUploadTags = urlSite + "/wp-json/itvndocorg/v1/tags/get-upload-list";
 			var listUploadCourses = [];
+			var listUploadTags = [];
 			var source;
 			var course_status;
 			var connection_host;
+			var is_upload_tags;
 			var current_item = 0;
 			var total_item;
 			var updated_item = 0;
@@ -255,6 +270,84 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 			  	}
 			}
 
+			function get_upload_tags(){
+				update_params();
+
+				var params = {
+					source: source,
+					course_status: course_status,
+					connection_host: connection_host,
+				};
+
+				$.get(urlGetUploadTags, params).done(function(data){
+					if(data.status == 'success'){
+						total_item = data.totalCourses;
+						listUploadTags = data.update_courses;
+						$('#btn_upload_tags').show();
+						$('#btn_prepare_upload_tags').attr('disabled','disabled');
+						display_progess();
+					}else{
+						alert(data.message);
+					}
+				});
+			}
+
+			function upload_tags(){
+				$('#btn_upload_tags').attr('disabled','disabled');
+				load_ajax_upload_tag(current_item);
+			}
+
+			function load_ajax_upload_tag(index){
+				if (index < total_item) {
+					display_current_item(listUploadTags[index]['intro_course_url']);
+					var params_upload = {
+						source: source,
+						course_status: course_status,
+						connection_host: connection_host,
+						id: listUploadTags[index]['id'],
+					};
+					$.ajax({
+						url: urlUploadTags,
+						type: "GET",
+						data: params_upload,
+						success: function(data){
+							if(data.status == 'error'){
+								$.each(data.messages, function( indexMsg, valueMsg ){
+									remove_progress_animation();
+								});
+							}else{
+								switch(data.status) {
+									case 'inserted':
+									inserted_item++;
+									break;
+									case 'updated':
+									updated_item++;
+									break;
+									case 'existed':
+									existed_item++;
+									break;
+									case 'failed':
+									failed_item++;
+									default:
+									break;
+								}
+								current_item = index + 1;
+								display_progess();
+								load_ajax_upload_tag(index + 1);
+							}
+						},
+						error: function(data){
+							remove_progress_animation();
+							alert('Have error when upload tags');
+						}
+					});
+				}else{
+					display_current_item('All Tags Uploaded');
+					display_progess();
+					remove_progress_animation();
+				}
+			}
+
 			function remove_progress_animation(){
 				$('.progress-bar-striped').removeClass('progress-bar-animated');
 			}
@@ -263,6 +356,7 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 				source = $('#source').val();
 				course_status = $('#course_status').val();
 				connection_host = $('#connection_host').val();
+				is_upload_tags = $('input[name="is_upload_tags"]:checked').val();
 			}
 
 			function display_current_item(name){

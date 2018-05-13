@@ -315,7 +315,7 @@ class Course{
 		if(isset($tags) && !empty($tags)){
 			$tags = json_decode($tags);
 			foreach ($tags as $key => $value) {
-				if( doubleval($value) >= 4 && !strpos($key, '/')){
+				if( doubleval($value) >= 5 && !strpos($key, '/')){
 
 					$new_key = trim(preg_replace('/[^A-Za-z0-9\-]/', ' ', $key)," -");
 					

@@ -85,7 +85,7 @@ $related = get_post_by_taxonomy('course', 'subject', $term[0]->slug);
 					<div class="tags border-bottom padding-vert-large">
 						<h4 class="font-18">Tags</h4>
 						<?php foreach ($tags as $key => $value) { ?>
-						<?php echo '<a href="'./*get_tag_link($value)*/'javascript:;'.'">'.$value->name.'</a>'; ?>
+						<?php echo '<a href="'.get_tag_link($value).'">'.$value->name.'</a>'; ?>
 						<?php } ?>
 					</div>
 					<?php } ?>
