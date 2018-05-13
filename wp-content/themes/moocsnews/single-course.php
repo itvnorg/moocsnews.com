@@ -33,17 +33,17 @@ $related = get_post_by_taxonomy('course', 'subject', $term[0]->slug);
 										<?php if(count($institutions) > 0){ ?>
 										<?php foreach ($institutions as $key => $value) { ?>
 										<?php if( (count($institutions)-1) == $key ) {?>
-										<?php echo '<a class="insitution" href="'./*get_term_link($value)*/'javascript:;'.'">'.$value->name.'</a>'; ?>
+										<?php echo '<a class="insitution" href="'.get_term_link($value).'">'.$value->name.'</a>'; ?>
 										<?php }else{ ?> 
-										<?php echo '<a class="insitution" href="'./*get_term_link($value)*/'javascript:;'.'">'.$value->name.'</a>,'; ?>
+										<?php echo '<a class="insitution" href="'.get_term_link($value).'">'.$value->name.'</a>,'; ?>
 										<?php } } } ?>
 										 via 
 										<?php if(count($providers) > 0){ ?>
 										<?php foreach ($providers as $key => $value) { ?>
 										<?php if( (count($providers)-1) == $key ) {?>
-										<?php echo '<a class="source" href="'./*get_term_link($value)*/'javascript:;'.'">'.$value->name.'</a>'; ?>
+										<?php echo '<a class="source" href="'.get_term_link($value).'">'.$value->name.'</a>'; ?>
 										<?php }else{ ?>
-										<?php echo '<a class="source" href="'./*get_term_link($value)*/'javascript:;'.'">'.$value->name.'</a>, '; ?>
+										<?php echo '<a class="source" href="'.get_term_link($value).'">'.$value->name.'</a>, '; ?>
 										<?php } } } ?>
 										</p>
 					<div class="description-course">
@@ -81,14 +81,14 @@ $related = get_post_by_taxonomy('course', 'subject', $term[0]->slug);
 					<div class="moocnews-chart">
 						
 					</div>
+					<?php if(count($tags) > 0){ ?>
 					<div class="tags border-bottom padding-vert-large">
 						<h4 class="font-18">Tags</h4>
-						<?php if(count($tags) > 0){ ?>
 						<?php foreach ($tags as $key => $value) { ?>
 						<?php echo '<a href="'./*get_tag_link($value)*/'javascript:;'.'">'.$value->name.'</a>'; ?>
 						<?php } ?>
-						<?php } ?>
 					</div>
+					<?php } ?>
 				</div>
 				<!-- BEGIN:  Relate course -->
 				<div class="relate-course">
@@ -102,7 +102,7 @@ $related = get_post_by_taxonomy('course', 'subject', $term[0]->slug);
 								<ul class="list-institutions">
 									<?php if(count($r_institutions) > 0){ ?>
 									<?php foreach ($r_institutions as $key => $value) { ?>
-									<?php echo '<li class="inline"><a href="'./*get_term_link($value)*/'javascript:;'.'"><span>'.$value->name.'</span></a></li>'; ?>
+									<?php echo '<li class="inline"><a href="'.get_term_link($value).'"><span>'.$value->name.'</span></a></li>'; ?>
 									<?php } } ?>
 								</ul>
 								<a class="relate-course-title" href=""><?php echo $post->post_title; ?></a>
@@ -111,9 +111,9 @@ $related = get_post_by_taxonomy('course', 'subject', $term[0]->slug);
 										<?php if(count($r_providers) > 0){ ?>
 										<?php foreach ($r_providers as $key => $value) { ?>
 										<?php if( (count($r_providers)-1) == $key ) {?>
-										<?php echo '<a href="'./*get_term_link($value)*/'javascript:;'.'" class="text-grey-bold text-italic">'.$value->name.'</a>'; ?>
+										<?php echo '<a href="'.get_term_link($value).'" class="text-grey-bold text-italic">'.$value->name.'</a>'; ?>
 										<?php }else{ ?>
-										<?php echo '<a href="'./*get_term_link($value)*/'javascript:;'.'" class="text-grey-bold text-italic">'.$value->name.'</a>, '; ?>
+										<?php echo '<a href="'.get_term_link($value).'" class="text-grey-bold text-italic">'.$value->name.'</a>, '; ?>
 										<?php } } } ?>
 									</span>
 								</div>
@@ -148,9 +148,9 @@ $related = get_post_by_taxonomy('course', 'subject', $term[0]->slug);
 								<strong class="item-label">provider</strong>
 							<?php foreach ($providers as $key => $value) { ?>
 							<?php if( (count($providers)-1) == $key ) {?>
-							<?php echo '<a class="item-link" href="'./*get_term_link($value)*/'javascript:;'.'"><span class="item-text">'.$value->name.'</span></a>'; ?>
+							<?php echo '<a class="item-link" href="'.get_term_link($value).'"><span class="item-text">'.$value->name.'</span></a>'; ?>
 							<?php }else{ ?>
-							<?php echo '<a class="item-link" href="'./*get_term_link($value)*/'javascript:;'.'"><span class="item-text">'.$value->name.'</span></a>, '; ?>
+							<?php echo '<a class="item-link" href="'.get_term_link($value).'"><span class="item-text">'.$value->name.'</span></a>, '; ?>
 							<?php } } ?>
 							</li>
 							<?php } ?>

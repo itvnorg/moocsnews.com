@@ -8,9 +8,11 @@ function itvndocorg_moocsnews_include_js(){
 	
 	wp_register_script('moocsnews_theme_bootstrap', $assetsUrl . '/plugins/bootstrap/bootstrap.min.js', array(), '4.0.0');
 	wp_register_script('moocsnews_theme_datatable', $assetsUrl . '/plugins/datatable/datatables.min.js', array(), '1.10.16');
+	wp_register_script('moocsnews_theme_layout', $assetsUrl . '/js/layout.js', array(), '1.0');
 	
 	wp_enqueue_script([
 		'moocsnews_theme_bootstrap',
+		'moocsnews_theme_layout',
 	]);
 
 	if(is_front_page()){

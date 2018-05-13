@@ -7,6 +7,55 @@ footer{
 	padding-bottom: 50px;
 }
 
+.body-2 {
+    background-color: #fff;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 0.5s ease;
+}
+
+.body-2.loaded {
+    transition: all 0.5s ease;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.loaded .dots-loader {
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+.dots-loader:not(:required) {
+    opacity: 1;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -4px;
+    margin-top: -4px;
+    text-indent: -9999px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    border-radius: 100%;
+    box-shadow: #f86 -14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    -webkit-animation: dots-loader 5s infinite ease-in-out;
+    animation: dots-loader 5s infinite ease-in-out;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    transition: .3s all;
+}
+
 .pull-right{
     float: right;
 }
@@ -341,7 +390,7 @@ section.popular-courses {
 }
 
 .content{
-    border-top: 1px solid #e3e3e3;
+    /*border-top: 1px solid #e3e3e3;*/
 }
 
 .left-filter{

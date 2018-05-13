@@ -1,3 +1,4 @@
+<?php global $the_home; ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
 <head>
@@ -18,6 +19,13 @@
 <?php echo get_theme_mod('head_script'); ?>
 </head>
 <body>
+
+	<!-- BEGIN: Indicator loading -->
+	<div class="body-2 loading home-page-loading">
+	    <div class="dots-loader"></div>
+	</div>
+	<!-- END: Indicator loading -->
+	
     <?php echo get_theme_mod('body_head_script'); ?>
 	<header>
     	<?php require_once MOOCSNEWS_THEME_INC_DIR . '/header-menu.php'; ?>
