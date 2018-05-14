@@ -9,6 +9,8 @@
 $institutions = get_terms( array(
     'taxonomy' => 'institution',
     'hide_empty' => false,
+    'orderby'	=> 'count',
+    'order'		=>	'DESC',
 ) );
 
 ?>

@@ -34,6 +34,16 @@
 			<div class="course-detail-info">
 				<div class="student-interested">
 					<div class="text-left">
+						<?php $addition_info = '';
+						if($meta['effort']){$addition_info =$meta['effort'];}
+						elseif($meta['duration']){$addition_info =$meta['duration'];}
+						else{$addition_info =$meta['session'];}
+						?>
+						<span class="student-label"><?php echo $addition_info; ?></span>
+					</div>
+				</div>
+				<!-- <div class="student-interested">
+					<div class="text-left">
 						<span class="number-student">40.7k</span>
 						<span class="student-label">student</br>interested</span>
 					</div>
@@ -47,7 +57,7 @@
 						<i class="fa fa-star" aria-hidden="true"></i>
 					</span>
 					<span class="reviews-number">4181 Reviews</span>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</a>

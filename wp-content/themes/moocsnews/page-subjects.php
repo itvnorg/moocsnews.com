@@ -9,6 +9,8 @@
 $subjects = get_terms( array(
     'taxonomy' => 'subject',
     'hide_empty' => false,
+    'orderby'	=> 'count',
+    'order'		=>	'DESC',
 ) );
 
 // Display subject item

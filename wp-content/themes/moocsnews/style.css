@@ -314,7 +314,7 @@ section.popular-courses {
     position: relative;
 }
 
-.course-title:after {
+/*.course-title:after {
    display: block;
    content: '...';
    width: 1em;
@@ -323,7 +323,7 @@ section.popular-courses {
    position: absolute;
    bottom: -5px;
    right: -5px;
-}
+}*/
 
 .course-detail-info{
     padding-left: 30px;
@@ -335,7 +335,7 @@ section.popular-courses {
 }
 
 .student-interested{
-    width: 50%;
+    /*width: 50%;*/
     min-height: 1px;
     float: left;
 }

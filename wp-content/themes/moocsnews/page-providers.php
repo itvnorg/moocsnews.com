@@ -9,6 +9,8 @@
 $providers = get_terms( array(
     'taxonomy' => 'provider',
     'hide_empty' => false,
+    'orderby'	=> 'count',
+    'order'		=>	'DESC',
 ) );
 
 ?>
