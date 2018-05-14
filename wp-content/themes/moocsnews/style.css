@@ -242,6 +242,10 @@ section.popular-courses {
     border: solid 1px #f2f2f2;
 }
 
+.navbar-moocnews .nav-link{
+    font-weight: 600;
+}
+
 /* BEGIN: Course Item */
 .course-link-item{
     color: #32aaf5;
