@@ -57,7 +57,7 @@ function clean_course_admin_page(){
 	?>
 	<div class="wrap">
 		<h1 class="wp-heading-inline">Clean Courses</h1>
-		<form action="<?php get_site_url; ?>/wp-admin/admin-post.php" method="POST">
+		<form action="<?php get_site_url(); ?>/wp-admin/admin-post.php" method="POST">
 			<input type="hidden" name="action" value="itvndocorg_clean_courses_hook">
 			<input type="hidden" name="custom_nonce" value="<?php echo $custom_form_nonce; ?>">
 			<div id="poststuff">
@@ -191,6 +191,7 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 			var failed_item = 0;
 
 			function get_upload_courses(){
+				$('#btn_prepare_upload_courses').attr('disabled','disabled');
 				update_params();
 
 				var params = {
@@ -204,7 +205,6 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 						total_item = data.totalCourses;
 						listUploadCourses = data.update_courses;
 						$('#btn_upload_courses').show();
-						$('#btn_prepare_upload_courses').attr('disabled','disabled');
 						display_progess();
 					}else{
 						alert(data.message);
@@ -231,7 +231,6 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 				  		type: "GET",
 				  		data: params_upload,
 				  		success: function(data){
-					  		console.log(data);
 							if(data.status == 'error'){
 								$.each(data.messages, function( indexMsg, valueMsg ){
 					  				remove_progress_animation();
@@ -259,7 +258,6 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 					  	},
 					  	error: function(data){
 					  		remove_progress_animation();
-					  		console.log(data);
 					  		alert('Have error when upload courses');
 					  	}
 				  	});
@@ -271,6 +269,7 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 			}
 
 			function get_upload_tags(){
+				$('#btn_prepare_upload_tags').attr('disabled','disabled');
 				update_params();
 
 				var params = {
@@ -284,7 +283,6 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 						total_item = data.totalCourses;
 						listUploadTags = data.update_courses;
 						$('#btn_upload_tags').show();
-						$('#btn_prepare_upload_tags').attr('disabled','disabled');
 						display_progess();
 					}else{
 						alert(data.message);

@@ -141,7 +141,7 @@ $subjects = get_terms( array(
 							<?php if ( $courses->have_posts() ) : while ( $courses->have_posts() ) : $courses->the_post(); 
 							$meta = get_post_meta( $post->ID, 'course_fields', true ); 
 							$institutions = wp_get_post_terms( $post->ID, 'institution' );
-							$course_subjects = wp_get_post_terms( $post->ID, 'subject' ); 
+							$course_providers = wp_get_post_terms( $post->ID, 'provider' ); 
 							?>
 
 							<tr>
@@ -161,9 +161,9 @@ $subjects = get_terms( array(
 									</a></div>
 									<span class="block">
 										via
-											<?php if(count($course_subjects) > 0){ ?>
-											<?php foreach ($course_subjects as $key => $value) { ?>
-											<?php if( (count($course_subjects)-1) == $key ) {?>
+											<?php if(count($course_providers) > 0){ ?>
+											<?php foreach ($course_providers as $key => $value) { ?>
+											<?php if( (count($course_providers)-1) == $key ) {?>
 											<?php echo '<a href="'.get_term_link($value).'">'.$value->name.'</a>'; ?>
 											<?php }else{ ?>
 											<?php echo '<a href="'.get_term_link($value).'">'.$value->name.'</a>, '; ?>

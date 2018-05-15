@@ -21,17 +21,7 @@ function itvndocorg_api_response_upload_courses($request){
 		return return_ajax_error('id course is invalid !!!');
 	}
 
-	$database_infos = [];
-
-	$tmp_arr = explode('@', $connection_host);
-	$tmp_arr_type_user_pwd = explode(':', $tmp_arr[0]);
-	$tmp_arr_user = explode('//', $tmp_arr_type_user_pwd[1]);
-	$tmp_arr_host_db_name = explode('/', $tmp_arr[1]);
-	$database_infos['type'] = $tmp_arr_type_user_pwd[0];
-	$database_infos['user'] = $tmp_arr_user[1];
-	$database_infos['password'] = $tmp_arr_type_user_pwd[2];
-	$database_infos['host'] = $tmp_arr_host_db_name[0];
-	$database_infos['name'] = $tmp_arr_host_db_name[1];
+	$database_infos = parse_connection_string($connection_host);
 
 	$community_db = new wpdb($database_infos['user'], $database_infos['password'], $database_infos['name'], $database_infos['host']);
 	
@@ -119,6 +109,38 @@ function itvndocorg_api_register_get_list_uploading_course_route(){
 	) );
 }
 
+// Explode string connection host to get info for connect staging database
+// mysql://user:password@host.com/database_name
+function parse_connection_string($connection_host){
+	$database_infos = [];
+
+	// mysql://user:password@host.com/database_name
+	$tmp_arr = explode('/', $connection_host);
+	$database_infos['name'] = $tmp_arr[(count($tmp_arr)-1)];
+	$tmp_arr = explode('/'.$database_infos['name'], $connection_host);
+	$connection_host = $tmp_arr[0];
+	// mysql://user:password@host.com
+	$tmp_arr = explode('@', $connection_host);
+	$database_infos['host'] = $tmp_arr[(count($tmp_arr)-1)];
+	$tmp_arr = explode('@'.$database_infos['host'], $connection_host);
+	$connection_host = $tmp_arr[0];
+	// mysql://user:password
+	$tmp_arr = explode(':', $connection_host);
+	$database_infos['password'] = $tmp_arr[(count($tmp_arr)-1)];
+	$tmp_arr = explode(':'.$database_infos['password'], $connection_host);
+	$connection_host = $tmp_arr[0];
+	// mysql://user
+	$tmp_arr = explode('//', $connection_host);
+	$database_infos['user'] = $tmp_arr[(count($tmp_arr)-1)];
+	$tmp_arr = explode($database_infos['user'], $connection_host);
+	$connection_host = $tmp_arr[0];
+	// mysql://
+	$tmp_arr = explode(':', $connection_host);
+	$database_infos['type'] = $tmp_arr[0];
+
+	return $database_infos;
+}
+
 function itvndocorg_api_response_get_list_upload_courses($request){
 	global $wpdb;
 	$course_status = (!empty($request['course_status'])) ? (string) $request['course_status'] : 'draft';
@@ -129,20 +151,7 @@ function itvndocorg_api_response_get_list_upload_courses($request){
 		return return_ajax_error('You have to input connection host field for connect to staging database');
 	}
 
-	// Explode string connection host to get info for connect staging database
-	// mysql://user:password@host.com:port/database_name
-	$database_infos = [];
-
-	$tmp_arr = explode('@', $connection_host);
-	$tmp_arr_type_user_pwd = explode(':', $tmp_arr[0]);
-	$tmp_arr_user = explode('//', $tmp_arr_type_user_pwd[1]);
-	$tmp_arr_host_db_name = explode('/', $tmp_arr[1]);
-	$database_infos['type'] = $tmp_arr_type_user_pwd[0];
-	$database_infos['user'] = $tmp_arr_user[1];
-	$database_infos['password'] = $tmp_arr_type_user_pwd[2];
-	$database_infos['host'] = $tmp_arr_host_db_name[0];
-	$database_infos['name'] = $tmp_arr_host_db_name[1];
-
+	$database_infos = parse_connection_string($connection_host);
 
 	foreach ($database_infos as $key => $value) {
 		if($value == ''){
@@ -192,19 +201,7 @@ function itvndocorg_api_response_get_list_upload_tags($request){
 		return return_ajax_error('You have to input connection host field for connect to staging database');
 	}
 
-	// Explode string connection host to get info for connect staging database
-	// mysql://user:password@host.com:port/database_name
-	$database_infos = [];
-
-	$tmp_arr = explode('@', $connection_host);
-	$tmp_arr_type_user_pwd = explode(':', $tmp_arr[0]);
-	$tmp_arr_user = explode('//', $tmp_arr_type_user_pwd[1]);
-	$tmp_arr_host_db_name = explode('/', $tmp_arr[1]);
-	$database_infos['type'] = $tmp_arr_type_user_pwd[0];
-	$database_infos['user'] = $tmp_arr_user[1];
-	$database_infos['password'] = $tmp_arr_type_user_pwd[2];
-	$database_infos['host'] = $tmp_arr_host_db_name[0];
-	$database_infos['name'] = $tmp_arr_host_db_name[1];
+	$database_infos = parse_connection_string($connection_host);
 
 
 	foreach ($database_infos as $key => $value) {
@@ -256,17 +253,7 @@ function itvndocorg_api_response_upload_tags($request){
 		return return_ajax_error('id course is invalid !!!');
 	}
 
-	$database_infos = [];
-
-	$tmp_arr = explode('@', $connection_host);
-	$tmp_arr_type_user_pwd = explode(':', $tmp_arr[0]);
-	$tmp_arr_user = explode('//', $tmp_arr_type_user_pwd[1]);
-	$tmp_arr_host_db_name = explode('/', $tmp_arr[1]);
-	$database_infos['type'] = $tmp_arr_type_user_pwd[0];
-	$database_infos['user'] = $tmp_arr_user[1];
-	$database_infos['password'] = $tmp_arr_type_user_pwd[2];
-	$database_infos['host'] = $tmp_arr_host_db_name[0];
-	$database_infos['name'] = $tmp_arr_host_db_name[1];
+	$database_infos = parse_connection_string($connection_host);
 
 	$community_db = new wpdb($database_infos['user'], $database_infos['password'], $database_infos['name'], $database_infos['host']);
 	
