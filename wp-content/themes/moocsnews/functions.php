@@ -29,3 +29,9 @@ global $the_home;
 if(empty($the_home)){
 	$the_home = get_home_url();
 }
+
+function filter_post_title($groupby) {
+ global $wpdb;
+ $groupby = " {$wpdb->posts}.post_title";
+ return $groupby;
+}

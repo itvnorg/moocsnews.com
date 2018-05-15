@@ -22,6 +22,7 @@
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <div class="row">
       <?php 
+      add_filter('posts_groupby','filter_post_title');
       $args = array(
         'post_type' => 'course',
         'posts_per_page' => '6',
@@ -37,6 +38,7 @@
 
       endwhile; endif; 
       wp_reset_postdata(); 
+      remove_filter('posts_groupby','filter_post_title');
       ?>
     </div>
   </div>
