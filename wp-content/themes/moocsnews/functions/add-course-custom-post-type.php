@@ -33,7 +33,7 @@ function itvndocorg_create_course_post_type() {
 			  	//'custom-fields',
 		), 
 		'taxonomies'   => array(
-			'category',
+			// 'category',
 			//'instructor',
 			//'institution',
 			//'specialization',
@@ -42,7 +42,7 @@ function itvndocorg_create_course_post_type() {
 
 	/* Register Post Type */
 	register_post_type( 'course', $args);
-	register_taxonomy_for_object_type( 'category', 'course' );
+	// register_taxonomy_for_object_type( 'category', 'course' );
 }
 add_action( 'init', 'itvndocorg_create_course_post_type' );
 
@@ -143,3 +143,9 @@ function itvndocorg_save_course_fields_meta( $post_id ) {
 	}
 }
 add_action( 'save_post', 'itvndocorg_save_course_fields_meta' );
+
+/*Add Tags To Courses*/
+add_action( 'init', 'itvndocorg_register_taxonomy_for_object_type' );
+function itvndocorg_register_taxonomy_for_object_type() {
+    register_taxonomy_for_object_type( 'post_tag', 'course' );
+};

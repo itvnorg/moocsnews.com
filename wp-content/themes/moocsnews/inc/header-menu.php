@@ -1,17 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light navbar-moocnews">
   <a class="navbar-brand text-logo" href="<?php echo esc_url( home_url() ); ?>"><?php bloginfo('name'); ?></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="<?php echo esc_url( home_url() ).'/courses'; ?>">Courses</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <?php wp_nav_menu( array( 
+      'theme_location' => 'header-menu', 
+      'menu_class' => 'navbar-nav mr-auto',
+      'container'=>false,
+    ) ); ?>
+    <form class="form-inline my-2 my-lg-0" method="GET" action="<?php echo $the_home; ?>">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="s" id="s">
       <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>

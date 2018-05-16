@@ -26,6 +26,15 @@ function itvndocorg_admin_menu(){
 	
 	add_submenu_page(
 		'itvndocorg', 
+		'itvn.org Clean Tags', 
+		'Clean Tags', 
+		'manage_options', 
+		'itvndocorg/clean-tag-admin-page', 
+		'clean_tag_admin_page'
+	);
+	
+	add_submenu_page(
+		'itvndocorg', 
 		'itvn.org Clean Courses', 
 		'Clean Courses', 
 		'manage_options', 
@@ -40,7 +49,7 @@ function itvndocorg_index_page(){
 	<div class="wrap">
 		<h2>Welcome To itvn.org tools</h2>
 	</div>
-	<?php
+	<?php 
 }
 
 // Function to manage content of page clean course
@@ -48,7 +57,7 @@ function clean_course_admin_page(){
 	?>
 	<div class="wrap">
 		<h1 class="wp-heading-inline">Clean Courses</h1>
-		<form action="<?php get_site_url; ?>/wp-admin/admin-post.php" method="POST">
+		<form action="<?php get_site_url(); ?>/wp-admin/admin-post.php" method="POST">
 			<input type="hidden" name="action" value="itvndocorg_clean_courses_hook">
 			<input type="hidden" name="custom_nonce" value="<?php echo $custom_form_nonce; ?>">
 			<div id="poststuff">
@@ -128,9 +137,20 @@ function ajax_upload_course_admin_page(){
 									<option value="edx">edX</option>
 							</select>
 						</p>
+
+						<p>
+							<div class="radio">
+								<label><input type="radio" name="is_upload_tags" value="1" checked>Upload Tags</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="is_upload_tags" value="0">Don't Upload Tags</label>
+							</div>
+						</p>
 					
 						<button type="submit" name="submit" class="button button-primary button-large" id="btn_prepare_upload_courses">Prepare courses to upload</button>
 						<a href="javascript:;" id="btn_upload_courses" class="button button-primary button-large" onclick="upload_courses();" style="display: none;">Upload course</a>
+						<a href="javascript:;" id="btn_prepare_upload_tags" class="button button-primary button-large" onclick="get_upload_tags();">Prepare tags to upload</a>
+						<a href="javascript:;" id="btn_upload_tags" class="button button-primary button-large" onclick="upload_tags();" style="display: none;">Upload tag</a>
 					</div>
 				</div>
 			</div>
@@ -155,10 +175,14 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 			var urlSite = window.location.origin;
 			var urlUploadCourses = urlSite + "/wp-json/itvndocorg/v1/courses/upload";
 			var urlGetUploadCourses = urlSite + "/wp-json/itvndocorg/v1/courses/get-upload-list";
+			var urlUploadTags = urlSite + "/wp-json/itvndocorg/v1/tags/upload";
+			var urlGetUploadTags = urlSite + "/wp-json/itvndocorg/v1/tags/get-upload-list";
 			var listUploadCourses = [];
+			var listUploadTags = [];
 			var source;
 			var course_status;
 			var connection_host;
+			var is_upload_tags;
 			var current_item = 0;
 			var total_item;
 			var updated_item = 0;
@@ -167,6 +191,7 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 			var failed_item = 0;
 
 			function get_upload_courses(){
+				$('#btn_prepare_upload_courses').attr('disabled','disabled');
 				update_params();
 
 				var params = {
@@ -180,7 +205,6 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 						total_item = data.totalCourses;
 						listUploadCourses = data.update_courses;
 						$('#btn_upload_courses').show();
-						$('#btn_prepare_upload_courses').attr('disabled','disabled');
 						display_progess();
 					}else{
 						alert(data.message);
@@ -244,6 +268,84 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 			  	}
 			}
 
+			function get_upload_tags(){
+				$('#btn_prepare_upload_tags').attr('disabled','disabled');
+				update_params();
+
+				var params = {
+					source: source,
+					course_status: course_status,
+					connection_host: connection_host,
+				};
+
+				$.get(urlGetUploadTags, params).done(function(data){
+					if(data.status == 'success'){
+						total_item = data.totalCourses;
+						listUploadTags = data.update_courses;
+						$('#btn_upload_tags').show();
+						display_progess();
+					}else{
+						alert(data.message);
+					}
+				});
+			}
+
+			function upload_tags(){
+				$('#btn_upload_tags').attr('disabled','disabled');
+				load_ajax_upload_tag(current_item);
+			}
+
+			function load_ajax_upload_tag(index){
+				if (index < total_item) {
+					display_current_item(listUploadTags[index]['intro_course_url']);
+					var params_upload = {
+						source: source,
+						course_status: course_status,
+						connection_host: connection_host,
+						id: listUploadTags[index]['id'],
+					};
+					$.ajax({
+						url: urlUploadTags,
+						type: "GET",
+						data: params_upload,
+						success: function(data){
+							if(data.status == 'error'){
+								$.each(data.messages, function( indexMsg, valueMsg ){
+									remove_progress_animation();
+								});
+							}else{
+								switch(data.status) {
+									case 'inserted':
+									inserted_item++;
+									break;
+									case 'updated':
+									updated_item++;
+									break;
+									case 'existed':
+									existed_item++;
+									break;
+									case 'failed':
+									failed_item++;
+									default:
+									break;
+								}
+								current_item = index + 1;
+								display_progess();
+								load_ajax_upload_tag(index + 1);
+							}
+						},
+						error: function(data){
+							remove_progress_animation();
+							alert('Have error when upload tags');
+						}
+					});
+				}else{
+					display_current_item('All Tags Uploaded');
+					display_progess();
+					remove_progress_animation();
+				}
+			}
+
 			function remove_progress_animation(){
 				$('.progress-bar-striped').removeClass('progress-bar-animated');
 			}
@@ -252,6 +354,7 @@ function itvndocorg_moocsnews_admin_ajax_upload_courses_include_js_code(){
 				source = $('#source').val();
 				course_status = $('#course_status').val();
 				connection_host = $('#connection_host').val();
+				is_upload_tags = $('input[name="is_upload_tags"]:checked').val();
 			}
 
 			function display_current_item(name){
@@ -287,4 +390,40 @@ function itvndocorg_add_admin_bootstrap(){
 		wp_enqueue_style(['moocsnews_theme_bootstrap']);
     }
 	
+}
+
+// Function to manage content of page clean course
+function clean_tag_admin_page(){
+	?>
+	<div class="wrap">
+		<div class="clearfix">
+			<h1 class="wp-heading-inline">Clean Tags</h1>
+			<form action="<?php get_site_url; ?>/wp-admin/admin-post.php" method="POST">
+				<input type="hidden" name="action" value="itvndocorg_clean_tags_hook">
+				<input type="hidden" name="custom_nonce" value="<?php echo $custom_form_nonce; ?>">
+				<div id="poststuff">
+					<div id="post-body" class="metabox-holder columns-2">
+						<div id="post-body-content" style="position: relative;">
+							<input type="submit" name="submit" class="button button-primary button-large">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="clearfix">
+			<h1 class="wp-heading-inline">Clean Instructors</h1>
+			<form action="<?php get_site_url; ?>/wp-admin/admin-post.php" method="POST">
+				<input type="hidden" name="action" value="itvndocorg_clean_instructors_hook">
+				<input type="hidden" name="custom_nonce" value="<?php echo $custom_form_nonce; ?>">
+				<div id="poststuff">
+					<div id="post-body" class="metabox-holder columns-2">
+						<div id="post-body-content" style="position: relative;">
+							<input type="submit" name="submit" class="button button-primary button-large">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<?php
 }

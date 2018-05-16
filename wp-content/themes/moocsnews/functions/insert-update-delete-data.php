@@ -115,7 +115,7 @@ function itvndocorg_insert_courses_hook_callback(){
 		$course->set_course_status($course_status);
 		$course->set_community_db($community_db);
 		$course->set_tmp_data($obj);
-		$course->set_tmp_start_data($start_date[0]);
+		$course->set_tmp_start_date($start_date[0]);
 		$course->prepare_data_for_insert_update();
 		$course->prepare_specs();
 		$is_existed = $course->get_course_by_url($obj->intro_course_url);
@@ -179,4 +179,54 @@ function itvndocorg_insert_courses_hook_callback(){
 	echo '</ul></br>';
 	echo '<a href="'.get_site_url().'/wp-admin/edit.php?post_type=course">All Courses Inserted, Click here to redirect to courses admin page !!!</a>';
 	
+}
+
+/*============== Add ECEP Clean Tag Hook To WP Admin ===================*/
+add_action('admin_post_itvndocorg_clean_tags_hook', 'itvndocorg_clean_tags_hook_callback');
+
+// Function controll post action clean course
+function itvndocorg_clean_tags_hook_callback(){
+	global $wpdb;
+	$deleted_tags = 0;
+	$sql_string = "select * from ".$wpdb->prefix."term_taxonomy";
+
+	// Where condition
+	$sql_string .= " where taxonomy = 'post_tag'";
+	
+	$rows = $wpdb->get_results($sql_string);
+
+	echo '<ul>List deleted tags:';
+	foreach ($rows as $obj){
+		echo '<li>'.$obj->name.'</li>';
+		wp_delete_term( $obj->term_id, 'post_tag');
+		$deleted_tags++;
+	}
+	echo '</ul></br>';
+	echo '<h5>Deleted '.$deleted_tags.'</h5>';
+	echo '<a href="'.get_site_url().'/wp-admin/edit-tags.php?taxonomy=post_tag&post_type=course">Deleted Tags Successful, Click here to redirect to tags admin page !!!</a>';
+}
+
+/*============== Add ECEP Clean Instructor Hook To WP Admin ===================*/
+add_action('admin_post_itvndocorg_clean_instructors_hook', 'itvndocorg_clean_instructors_hook_callback');
+
+// Function controll post action clean course
+function itvndocorg_clean_instructors_hook_callback(){
+	global $wpdb;
+	$deleted_tags = 0;
+	$sql_string = "select * from ".$wpdb->prefix."term_taxonomy";
+
+	// Where condition
+	$sql_string .= " where taxonomy = 'instructor'";
+	
+	$rows = $wpdb->get_results($sql_string);
+
+	echo '<ul>List deleted tags:';
+	foreach ($rows as $obj){
+		echo '<li>'.$obj->name.'</li>';
+		wp_delete_term( $obj->term_id, 'instructor');
+		$deleted_tags++;
+	}
+	echo '</ul></br>';
+	echo '<h5>Deleted '.$deleted_tags.'</h5>';
+	echo '<a href="'.get_site_url().'/wp-admin/edit-tags.php?taxonomy=instructor&post_type=course">Deleted Instructors Successful, Click here to redirect to tags admin page !!!</a>';
 }

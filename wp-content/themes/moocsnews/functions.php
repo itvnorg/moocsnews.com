@@ -1,5 +1,5 @@
 <?php 
-
+// remove_filter('template_redirect','redirect_canonical');
 /*==============	Define Const Vars	======================*/
 define('MOOCSNEWS_THEME_URL', get_template_directory_uri());
 
@@ -19,4 +19,19 @@ require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-custom-fields-to-taxonomy.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-custom-taxonomies.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/insert-update-delete-data.php';
 require_once MOOCSNEWS_THEME_FUNC_DIR . '/api.php';
-require_once MOOCSNEWS_THEME_FUNC_DIR . '/load_css_js_front_end.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/load-css-js-front-end.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/metadata-structured-data-google.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/add-customize-theme.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/create-site-maps.php';
+require_once MOOCSNEWS_THEME_FUNC_DIR . '/retrieve_datas.php';
+
+global $the_home;
+if(empty($the_home)){
+	$the_home = get_home_url();
+}
+
+function filter_post_title($groupby) {
+ global $wpdb;
+ $groupby = " {$wpdb->posts}.post_title";
+ return $groupby;
+}
